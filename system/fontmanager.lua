@@ -988,7 +988,11 @@ function BitmapString:reformatLine(lineNumber,xPos)
 			xPos = math.max(charBox.x2)   													-- get the next position to the right.
 			self.boundingBox.x2 = math.max(self.boundingBox.x2,xPos) 						-- update the bounding box.
 			self.boundingBox.y2 = math.max(self.boundingBox.y2,charBox.y2)
-			xPos = xPos + self.horizontalSpacingPixels  									-- spacing goes after bounding box.
+			if index < #self.characterList then												-- do not add spacing to the last character of the line
+				if self.characterList[index+1].lineNumber == ln then
+					xPos = xPos + self.horizontalSpacingPixels  							-- spacing goes after bounding box.
+				end
+			end
 			if self.direction == 180 then
 				xPos = charBox.x1 - self.horizontalSpacingPixels 
 			end
